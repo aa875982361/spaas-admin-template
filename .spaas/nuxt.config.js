@@ -6,8 +6,10 @@
  * @LastEditors: barret
  */
 require('dotenv').config();
-const proxyConfig = require('./config/proxy.config');
+const proxyConfig = require('../proxy.config');
 const path = require('path');
+// 添加扩展路由
+const fg = require('fast-glob');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -20,6 +22,16 @@ function resolve(dir) {
 const env = process.env;
 const isProd = env.MODE === 'prod';
 const publicPath = env.PUBLIC_PATH || './';
+
+const filePath = fg.sync(resolve('../src/**/route.js'), {
+  deep: 2,
+  onlyFiles: true,
+});
+
+const routes = filePath.reduce((pre, cur) => {
+  const file = require(cur).default;
+  return pre.concat(file);
+}, []);
 
 // 不能以斜杠结尾
 const apiServer = process.env.API_SERVER;
@@ -43,7 +55,7 @@ if (isProd && apiServer) {
 }
 
 const nuxtConfig = {
-  srcDir: 'src/',
+  srcDir: '.spaas/',
   mode: 'spa',
   env: {
     NO_LOGIN: process.env.NO_LOGIN,
@@ -53,6 +65,10 @@ const nuxtConfig = {
   router: {
     middleware: ['meta', 'auth'],
     mode: 'hash',
+    extendRoutes(r) {
+      // 注意：在pages文件夹中不能加_.vue文件
+      r.push(...routes);
+    },
   },
   /*
    ** Build configuration
@@ -81,7 +97,7 @@ const nuxtConfig = {
       config.module.rules.push({
         test: /\.svg$/,
         loader: 'svg-sprite-loader',
-        include: [resolve('src/icons')],
+        include: [resolve('./icons')],
         options: {
           symbolId: 'icon-[name]',
         },
@@ -89,7 +105,7 @@ const nuxtConfig = {
 
       config.module.rules.push({
         test: /\.(png|jpe?g|gif|svg)$/,
-        exclude: [resolve('src/icons')],
+        exclude: [resolve('./icons')],
         use: [
           {
             loader: 'url-loader',
