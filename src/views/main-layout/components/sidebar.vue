@@ -80,7 +80,7 @@ export default {
   z-index: 100;
   box-shadow: 1px 0 6px rgba(0, 21, 41, 0.35);
 
-  //reset element-ui css
+  //reset @femessage/element-ui css
   .horizontal-collapse-transition {
     transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
   }

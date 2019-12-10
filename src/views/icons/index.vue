@@ -46,7 +46,7 @@
 import clipboard from '@/utils/clipboard';
 import svgIcons from './svg-icons';
 import elementIcons from './element-icons';
-import {Tabs, TabPane} from 'element-ui';
+import {Tabs, TabPane} from '@femessage/element-ui';
 
 export default {
   name: 'Icons',

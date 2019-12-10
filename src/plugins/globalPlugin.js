@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import dayjs from 'dayjs';
-import {MessageBox} from 'element-ui';
+import {MessageBox} from '@femessage/element-ui';
 import '@/icons/index';
 
 export default function({store}) {
@@ -36,7 +36,7 @@ export default function({store}) {
    * @param() confirm 传入的 promise
    *
    * 解决的问题:
-   *    confirm 是 element-ui 的一个 确认消息(messageBox) 消息组件
+   *    confirm 是 @femessage/element-ui 的一个 确认消息(messageBox) 消息组件
    * 但是我们一般会在用户交互问答后发送请求，此时该组件原本没有提供 loading 接口，故制作一个满足业务需求的 confirm
    */
   Vue.prototype.$loadingConfirm = function f({

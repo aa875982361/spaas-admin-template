@@ -60,17 +60,6 @@ const nuxtConfig = {
   build: {
     [isProd ? 'publicPath' : '']: publicPath,
     extractCSS: true,
-    babel: {
-      plugins: [
-        [
-          'component',
-          {
-            libraryName: 'element-ui',
-            styleLibraryName: 'theme-chalk',
-          },
-        ],
-      ],
-    },
 
     /*
      ** Run ESLint on save
@@ -152,6 +141,11 @@ const nuxtConfig = {
       {
         rel: 'icon',
         type: 'image/x-icon',
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: 'https://cdn.jsdelivr.net/npm/@femessage/element-ui/lib/theme-chalk/index.css',
       },
     ],
   },
